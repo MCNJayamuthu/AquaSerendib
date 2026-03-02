@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MapPin, Info, AlertTriangle } from 'lucide-react';
 import { getFishData } from '../services/fishData';
-import { FishData } from '../types';
+import { FishData } from '../types/index';
 
 const Knowledge: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -58,9 +58,9 @@ const Knowledge: React.FC = () => {
                 
                 <div className="p-6 flex-grow flex flex-col">
                   <div className="mb-4">
-                    <h2 className="text-2xl font-bold text-slate-800 mb-1">{fish.name}</h2>
+                    <h2 className="text-2xl font-bold text-slate-800 mb-1">{fish.sinhalaName}</h2>
                     <p className="text-sm text-aqua-mid italic font-serif">{fish.scientificName}</p>
-                    <p className="text-xs text-slate-500 mt-1">Sinhala: <span className="font-semibold">{fish.sinhalaName}</span></p>
+                    <p className="text-xs text-slate-500 mt-1">English: <span className="font-semibold">{fish.name}</span></p>
                   </div>
 
                   <p className="text-slate-600 mb-6 text-sm leading-relaxed flex-grow">

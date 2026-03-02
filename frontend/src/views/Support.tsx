@@ -21,6 +21,57 @@ const FAQItem: React.FC<{ question: string; answer: string }> = ({ question, ans
 };
 
 const Support: React.FC = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string | null>(null);
+  const [isError, setIsError] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!email || !message) {
+      setStatusMessage("Email and message are required.");
+      setIsError(true);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setStatusMessage(null);
+
+      const response = await fetch("http://localhost:5000/api/support", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email,
+          message
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit message");
+      }
+
+      setStatusMessage("Your message has been sent successfully!");
+      setIsError(false);
+
+      // Reset form
+      setName('');
+      setEmail('');
+      setMessage('');
+
+    } catch (error) {
+      setStatusMessage("Something went wrong. Please try again.");
+      setIsError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 pt-28 pb-20 px-4">
       <div className="max-w-6xl mx-auto">
@@ -36,52 +87,83 @@ const Support: React.FC = () => {
               <MessageSquare className="w-6 h-6 text-aqua-mid" />
               <h2 className="text-2xl font-bold text-slate-800">Frequently Asked Questions</h2>
             </div>
-            
+
             <div className="space-y-2">
               <FAQItem 
                 question="How accurate is the AI detection?" 
-                answer="Our AI model is trained on a verified dataset of Sri Lankan endemic fish. While highly accurate for clear images, environmental factors like water turbidity can affect results. It typically achieves over 90% confidence." 
+                answer="Our AI model is trained on verified datasets of Sri Lankan endemic fish species. Accuracy exceeds 90% under optimal conditions." 
               />
               <FAQItem 
                 question="Is this service free to use?" 
-                answer="Yes, AquaSerendib is a free tool dedicated to environmental education and conservation awareness." 
+                answer="Yes, AquaSerendib is completely free and dedicated to conservation awareness." 
               />
               <FAQItem 
-                question="Can I upload photos of marine fish?" 
-                answer="Currently, our model is specialized only for freshwater endemic species of Sri Lanka. Marine fish may not be identified correctly." 
+                question="Can I upload marine fish?" 
+                answer="Currently, the system supports only freshwater endemic species of Sri Lanka." 
               />
-               <FAQItem 
-                question="How do I contribute data?" 
-                answer="We are working on a community submission feature. For now, please contact us if you have high-quality datasets." 
+              <FAQItem 
+                question="How can I contribute data?" 
+                answer="We are working on a community contribution module. Stay tuned for updates." 
               />
             </div>
           </div>
 
           {/* Contact Form */}
           <div className="bg-aqua-deep text-white p-8 rounded-2xl shadow-lg relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
-            
             <div className="relative z-10">
               <div className="flex items-center gap-3 mb-8">
                 <Mail className="w-6 h-6 text-aqua-light" />
                 <h2 className="text-2xl font-bold">Contact Us</h2>
               </div>
-              
-              <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+
+              <form className="space-y-4" onSubmit={handleSubmit}>
                 <div>
                   <label className="block text-sm font-medium text-aqua-pale mb-1">Name</label>
-                  <input type="text" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-aqua-light" placeholder="Your Name" />
+                  <input 
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-aqua-light"
+                    placeholder="Your Name"
+                  />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-aqua-pale mb-1">Email</label>
-                  <input type="email" className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-aqua-light" placeholder="your@email.com" />
+                  <input 
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-aqua-light"
+                    placeholder="your@email.com"
+                    required
+                  />
                 </div>
+
                 <div>
                   <label className="block text-sm font-medium text-aqua-pale mb-1">Message</label>
-                  <textarea rows={4} className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-aqua-light" placeholder="How can we assist you?"></textarea>
+                  <textarea 
+                    rows={4}
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full bg-white/10 border border-white/20 rounded-lg px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-aqua-light"
+                    placeholder="How can we assist you?"
+                    required
+                  />
                 </div>
-                <button className="w-full bg-white text-aqua-deep font-bold py-3 rounded-lg hover:bg-aqua-pale transition-colors flex items-center justify-center gap-2">
-                  Send Message
+
+                {statusMessage && (
+                  <p className={`text-sm ${isError ? 'text-red-300' : 'text-green-300'}`}>
+                    {statusMessage}
+                  </p>
+                )}
+
+                <button 
+                  type="submit"
+                  disabled={loading}
+                  className="w-full bg-white text-aqua-deep font-bold py-3 rounded-lg hover:bg-aqua-pale transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {loading ? "Sending..." : "Send Message"}
                   <Send className="w-4 h-4" />
                 </button>
               </form>
