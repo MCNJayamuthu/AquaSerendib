@@ -1,5 +1,8 @@
 import React from 'react';
 import { Target, Shield, Users } from 'lucide-react';
+import backgroundImage1 from '../assets/bg-about-page.jpg';
+import backgroundImage2 from '../assets/about-1.avif';
+import backgroundImage3 from '../assets/about-2.avif';
 
 const About: React.FC = () => {
   return (
@@ -8,7 +11,7 @@ const About: React.FC = () => {
       <div className="relative h-[60vh] flex items-center justify-center">
         <div 
           className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=2074&auto=format&fit=crop")' }}
+          style={{ backgroundImage: `url(${backgroundImage1})` }}
         >
           <div className="absolute inset-0 bg-aqua-deep/70 mix-blend-multiply"></div>
         </div>
@@ -33,8 +36,8 @@ const About: React.FC = () => {
             </p>
           </div>
           <div className="grid grid-cols-2 gap-4">
-             <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?q=80&w=2070&auto=format&fit=crop" className="rounded-2xl shadow-lg mt-8" alt="River" />
-             <img src="https://images.unsplash.com/photo-1535591273668-578e31182c4f?q=80&w=2070&auto=format&fit=crop" className="rounded-2xl shadow-lg" alt="Underwater" />
+             <img src={backgroundImage2} className="rounded-2xl shadow-lg mt-8" alt="River" />
+             <img src={backgroundImage3} className="rounded-2xl shadow-lg" alt="Underwater" />
           </div>
         </div>
 

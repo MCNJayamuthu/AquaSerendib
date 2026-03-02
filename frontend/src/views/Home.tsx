@@ -3,6 +3,7 @@ import { Upload, X, ArrowRight, AlertCircle, CheckCircle } from 'lucide-react';
 import { identifyFish } from '../services/geminiService';
 import { IdentificationResult } from '../types';
 import SwimmingFishLoader from '../components/SwimmingFishLoader';
+import backgroundImage from '../assets/home-background.avif';
 
 const Home: React.FC = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -54,7 +55,7 @@ const Home: React.FC = () => {
         {/* Background Image */}
         <div 
           className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0 transform scale-105 transition-transform duration-[20s] ease-in-out hover:scale-100"
-          style={{ backgroundImage: 'url("https://images.unsplash.com/photo-1518837695005-2083093ee35b?q=80&w=2070&auto=format&fit=crop")' }}
+          style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/30 to-slate-50"></div>
         </div>

@@ -1,4 +1,4 @@
-export type PageView = 'home' | 'about' | 'knowledge' | 'support' | 'plans';
+export type PageView = 'home' | 'about' | 'knowledge' | 'support' | 'roadmap';
 
 export interface FishData {
   id: string;

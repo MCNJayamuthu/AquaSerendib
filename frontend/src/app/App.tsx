@@ -4,7 +4,7 @@ import Home from '../views/Home';
 import About from '../views/About';
 import Knowledge from '../views/Knowledge';
 import Support from '../views/Support';
-import Plans from '../views/Plans';
+import RoadMap from '../views/RoadMap';
 import { PageView } from '../types';
 
 const App: React.FC = () => {
@@ -27,7 +27,7 @@ const App: React.FC = () => {
           <nav className="hidden md:flex gap-8 flex-1 justify-end pr-12">
             <button onClick={() => navigateTo('home')} className={navClasses('home')}>Home</button>
             <button onClick={() => navigateTo('knowledge')} className={navClasses('knowledge')}>Knowledge</button>
-            <button onClick={() => navigateTo('plans')} className={navClasses('plans')}>Plans</button>
+            <button onClick={() => navigateTo('roadmap')} className={navClasses('roadmap')}>Roadmap</button>
           </nav>
 
           <div
@@ -58,7 +58,7 @@ const App: React.FC = () => {
             <div className="flex flex-col p-6 gap-6 text-center">
               <button onClick={() => navigateTo('home')} className="text-lg font-bold text-white hover:text-aqua-light">Home</button>
               <button onClick={() => navigateTo('knowledge')} className="text-lg font-bold text-white hover:text-aqua-light">Knowledge</button>
-              <button onClick={() => navigateTo('plans')} className="text-lg font-bold text-white hover:text-aqua-light">Plans</button>
+              <button onClick={() => navigateTo('roadmap')} className="text-lg font-bold text-white hover:text-aqua-light">Roadmap</button>
               <button onClick={() => navigateTo('about')} className="text-lg font-bold text-white hover:text-aqua-light">About Us</button>
               <button onClick={() => navigateTo('support')} className="text-lg font-bold text-white hover:text-aqua-light">Support</button>
             </div>
@@ -69,7 +69,7 @@ const App: React.FC = () => {
       <main className="flex-grow">
         {currentView === 'home' && <Home />}
         {currentView === 'knowledge' && <Knowledge />}
-        {currentView === 'plans' && <Plans />}
+        {currentView === 'roadmap' && <RoadMap />}
         {currentView === 'about' && <About />}
         {currentView === 'support' && <Support />}
       </main>
@@ -87,7 +87,7 @@ const App: React.FC = () => {
 
             <div className="flex gap-8 text-sm font-semibold text-aqua-pale">
               <button onClick={() => navigateTo('knowledge')} className="hover:text-white transition-colors">Species Database</button>
-              <button onClick={() => navigateTo('plans')} className="hover:text-white transition-colors">Roadmap</button>
+              <button onClick={() => navigateTo('roadmap')} className="hover:text-white transition-colors">Roadmap</button>
               <button onClick={() => navigateTo('about')} className="hover:text-white transition-colors">Mission</button>
               <button onClick={() => navigateTo('support')} className="hover:text-white transition-colors">Contact</button>
             </div>
