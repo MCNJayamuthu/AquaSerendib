@@ -1,8 +1,9 @@
-import { Router } from 'express';
-import { getFishSpecies } from '../controllers/fish.controller';
+import express from 'express';
+import { getFishByName, getFishSpecies } from '../controllers/fish.controller';
 
-const router = Router();
+const router = express.Router();
 
 router.get('/', getFishSpecies);
+router.get('/search', getFishByName);
 
 export default router;

@@ -5,6 +5,7 @@ export interface FishSpeciesDTO {
   sinhala_name: string;
   habitat: string;
   location: string;
+  description: string;
   image_url: string;
   conservation_status: string;
 }

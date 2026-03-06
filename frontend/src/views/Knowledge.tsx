@@ -63,9 +63,9 @@ const Knowledge: React.FC = () => {
                     <p className="text-xs text-slate-500 mt-1">English: <span className="font-semibold">{fish.name}</span></p>
                   </div>
 
-                  <p className="text-slate-600 mb-6 text-sm leading-relaxed flex-grow">
-                    {fish.description}
-                  </p>
+                  <p className="text-slate-500 mb-6 text-sm leading-relaxed flex-grow">Habitat: <span className="font-semibold">{fish.habitat}</span></p>
+
+                  <p className="text-slate-500 mb-6 text-sm leading-relaxed flex-grow">Description: <span className="font-semibold">{fish.description}</span></p>
 
                   <div className="space-y-3 pt-4 border-t border-slate-100">
                     <div className="flex items-start gap-3 text-sm text-slate-600">
