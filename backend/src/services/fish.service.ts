@@ -1,18 +1,59 @@
-import { fetchAllFish } from '../dao/fish.dao';
+import { fetchAllFish, insertFish, updateFish, deleteFish } from '../dao/fish.dao';
+import { FishSpeciesDTO } from '../dto/FishSpeciesDTO';
+import { uploadFishImageToStorage } from "../dao/fish.dao";
+
+
+export const uploadFishImage = async (file: Express.Multer.File) => {
+
+  const fileName = `${Date.now()}-${file.originalname}`;
+
+  const imageUrl = await uploadFishImageToStorage(fileName, file.buffer);
+
+  return imageUrl;
+
+};
 
 export const getAllFishSpecies = async () => {
+
   const fishList = await fetchAllFish();
 
-  // Transform to frontend-friendly structure
   return fishList.map((fish) => ({
     id: fish.id,
-    name: fish.english_name,
-    scientificName: fish.scientific_name,
-    sinhalaName: fish.sinhala_name,
+    english_name: fish.english_name,
+    scientific_name: fish.scientific_name,
+    sinhala_name: fish.sinhala_name,
     habitat: fish.habitat,
     description: fish.description,
     location: fish.location,
     conservationStatus: fish.conservation_status,
-    imageUrl: fish.image_url,
+    image_url: fish.image_url,
   }));
-};  
+
+};
+
+
+
+export const createFishSpecies = async (payload: FishSpeciesDTO) => {
+
+  return await insertFish(payload);
+
+};
+
+
+
+export const editFishSpecies = async (
+  id: string,
+  payload: Partial<FishSpeciesDTO>
+) => {
+
+  return await updateFish(id, payload);
+
+};
+
+
+
+export const removeFishSpecies = async (id: string) => {
+
+  return await deleteFish(id);
+
+};

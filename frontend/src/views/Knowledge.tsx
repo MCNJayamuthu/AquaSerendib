@@ -47,8 +47,8 @@ const Knowledge: React.FC = () => {
               <div key={fish.id} className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 flex flex-col group">
                 <div className="relative h-56 overflow-hidden">
                   <img 
-                    src={fish.imageUrl} 
-                    alt={fish.name} 
+                    src={fish.image_url} 
+                    alt={fish.english_name} 
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute top-4 right-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-aqua-deep uppercase tracking-wider shadow-sm">
@@ -58,9 +58,9 @@ const Knowledge: React.FC = () => {
                 
                 <div className="p-6 flex-grow flex flex-col">
                   <div className="mb-4">
-                    <h2 className="text-2xl font-bold text-slate-800 mb-1">{fish.sinhalaName}</h2>
-                    <p className="text-sm text-aqua-mid italic font-serif">{fish.scientificName}</p>
-                    <p className="text-xs text-slate-500 mt-1">English: <span className="font-semibold">{fish.name}</span></p>
+                    <h2 className="text-2xl font-bold text-slate-800 mb-1">{fish.sinhala_name}</h2>
+                    <p className="text-sm text-aqua-mid italic font-serif">{fish.scientific_name}</p>
+                    <p className="text-xs text-slate-500 mt-1">English: <span className="font-semibold">{fish.english_name}</span></p>
                   </div>
 
                   <p className="text-slate-500 mb-6 text-sm leading-relaxed flex-grow">Habitat: <span className="font-semibold">{fish.habitat}</span></p>
