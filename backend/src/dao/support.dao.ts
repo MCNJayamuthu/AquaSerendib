@@ -12,3 +12,16 @@ export const insertSupportMessage = async (
 
   return data;
 };
+
+export const fetchSupportMessages = async () => {
+
+  const { data, error } = await supabase
+    .from('support_messages')
+    .select('*')
+    .order('created_at', { ascending: false });
+
+  if (error) throw new Error(error.message);
+
+  return data;
+
+};
