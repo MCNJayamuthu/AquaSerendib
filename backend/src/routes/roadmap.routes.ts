@@ -7,14 +7,16 @@ import {
   deleteRoadmapItemController
 } from "../controllers/roadmap.controller";
 
-const router = Router();
+import { authenticateAdmin } from '../middleware/auth.middleware';
 
-router.post("/", createRoadmapItemController);
+const router = Router();
 
 router.get("/", getRoadmapItemsController);
 
-router.put("/:id", updateRoadmapItemController);
+router.post("/", authenticateAdmin, createRoadmapItemController);
 
-router.delete("/:id", deleteRoadmapItemController);
+router.put("/:id", authenticateAdmin, updateRoadmapItemController);
+
+router.delete("/:id", authenticateAdmin, deleteRoadmapItemController);
 
 export default router;

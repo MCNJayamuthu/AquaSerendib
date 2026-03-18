@@ -56,6 +56,7 @@ const FishForm: React.FC<Props> = ({
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const token = localStorage.getItem("adminToken");
     const file = e.target.files?.[0];
     if (!file) return;
 
@@ -66,6 +67,9 @@ const FishForm: React.FC<Props> = ({
     try {
       const res = await fetch("http://localhost:5000/api/fish/upload-image", {
         method: "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        },
         body: formDataUpload,
       });
 

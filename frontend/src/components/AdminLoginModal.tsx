@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { X, Lock, User, LogIn } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   close: () => void;
@@ -11,6 +12,7 @@ const AdminLoginModal: React.FC<Props> = ({ close, navigateTo }) => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ const AdminLoginModal: React.FC<Props> = ({ close, navigateTo }) => {
 
       if (data.token) {
         localStorage.setItem("adminToken", data.token);
-        navigateTo("admin");
+        navigate("/admin/dashboard");
         close();
       } else {
         setError(data.message || "Login failed. Please try again.");

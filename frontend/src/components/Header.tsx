@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Menu, X, Droplets } from "lucide-react";
 import { PageView } from "../types";
+import { Link } from "react-router-dom";
 
 interface HeaderProps {
   currentView: PageView;
@@ -24,17 +25,17 @@ const Header: React.FC<HeaderProps> = ({ currentView, navigateTo }) => {
 
         {/* LEFT NAV */}
         <nav className="hidden md:flex gap-8 flex-1 justify-end pr-12">
-          <button onClick={() => navigateTo("home")} className={navClasses("home")}>
+          <Link to="/" className="text-sm font-bold uppercase tracking-wider hover:text-aqua-light transition-colors text-slate-300">
             Home
-          </button>
+          </Link>
 
-          <button onClick={() => navigateTo("knowledge")} className={navClasses("knowledge")}>
+          <Link to="/knowledge" className="text-sm font-bold uppercase tracking-wider hover:text-aqua-light transition-colors text-slate-300">
             Knowledge
-          </button>
+          </Link>
 
-          <button onClick={() => navigateTo("roadmap")} className={navClasses("roadmap")}>
+          <Link to="/roadmap" className="text-sm font-bold uppercase tracking-wider hover:text-aqua-light transition-colors text-slate-300">
             Roadmap
-          </button>
+          </Link>
         </nav>
 
         {/* CENTER LOGO */}
@@ -43,23 +44,25 @@ const Header: React.FC<HeaderProps> = ({ currentView, navigateTo }) => {
           onClick={() => navigateTo("home")}
         >
           <div className="bg-white p-2 rounded-full shadow-lg shadow-aqua-light/20">
-            <Droplets className="w-8 h-8 text-aqua-deep" />
+            <Link to="/">
+              <Droplets className="w-8 h-8 text-aqua-light" />
+            </Link>
           </div>
 
           <span className="text-xs font-serif font-bold mt-1 tracking-widest text-white/90">
-            AQUA
+            AQUA SERENDIB
           </span>
         </div>
 
         {/* RIGHT NAV */}
         <nav className="hidden md:flex gap-8 flex-1 justify-start pl-12">
-          <button onClick={() => navigateTo("about")} className={navClasses("about")}>
+          <Link to="/about" className="text-sm font-bold uppercase tracking-wider hover:text-aqua-light transition-colors text-slate-300">
             About Us
-          </button>
+          </Link>
 
-          <button onClick={() => navigateTo("support")} className={navClasses("support")}>
+          <Link to="/support" className="text-sm font-bold uppercase tracking-wider hover:text-aqua-light transition-colors text-slate-300">
             Support
-          </button>
+          </Link>
         </nav>
 
         {/* MOBILE MENU BUTTON */}
@@ -77,40 +80,36 @@ const Header: React.FC<HeaderProps> = ({ currentView, navigateTo }) => {
         <div className="md:hidden bg-aqua-deep absolute top-20 w-full border-t border-white/10 shadow-xl animate-in slide-in-from-top-5">
           <div className="flex flex-col p-6 gap-6 text-center">
 
-            <button
-              onClick={() => navigateTo("home")}
+            
+            <Link to="/" onClick={() => setIsMobileMenuOpen(false)}
               className="text-lg font-bold text-white hover:text-aqua-light"
             >
               Home
-            </button>
+            </Link>
 
-            <button
-              onClick={() => navigateTo("knowledge")}
+            <Link to="/knowledge" onClick={() => setIsMobileMenuOpen(false)}
               className="text-lg font-bold text-white hover:text-aqua-light"
             >
               Knowledge
-            </button>
+            </Link>
 
-            <button
-              onClick={() => navigateTo("roadmap")}
+            <Link to="/roadmap" onClick={() => setIsMobileMenuOpen(false)}
               className="text-lg font-bold text-white hover:text-aqua-light"
             >
               Roadmap
-            </button>
+            </Link>
 
-            <button
-              onClick={() => navigateTo("about")}
+            <Link to="/about" onClick={() => setIsMobileMenuOpen(false)}
               className="text-lg font-bold text-white hover:text-aqua-light"
             >
               About Us
-            </button>
+            </Link>
 
-            <button
-              onClick={() => navigateTo("support")}
+            <Link to="/support" onClick={() => setIsMobileMenuOpen(false)}
               className="text-lg font-bold text-white hover:text-aqua-light"
             >
               Support
-            </button>
+            </Link>
 
           </div>
         </div>

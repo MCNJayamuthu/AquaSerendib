@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Plus, CreditCard as Edit, Trash2, MapPin, AlertCircle } from "lucide-react";
+import FishForm from "./FishForm";
 
 interface Fish {
   id: string;
@@ -42,12 +43,14 @@ const FishManagement: React.FC<Props> = ({ onOpenAddForm, onOpenEditForm }) => {
   }, []);
 
   const handleAddOrUpdateFish = async (formData: any) => {
+  const token = localStorage.getItem("adminToken");
     try {
       if (editingFish) {
         await fetch(`http://localhost:5000/api/fish/${editingFish.id}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(formData),
         });
@@ -56,6 +59,7 @@ const FishManagement: React.FC<Props> = ({ onOpenAddForm, onOpenEditForm }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
           },
           body: JSON.stringify(formData),
         });
@@ -70,11 +74,17 @@ const FishManagement: React.FC<Props> = ({ onOpenAddForm, onOpenEditForm }) => {
   };
 
   const handleDelete = async (id: string) => {
+
+    const token = localStorage.getItem("adminToken");
+
     if (!confirm("Are you sure you want to delete this fish?")) return;
 
     try {
       await fetch(`http://localhost:5000/api/fish/${id}`, {
         method: "DELETE",
+        headers: {
+        "Authorization": `Bearer ${token}`
+        }
       });
       fetchFish();
     } catch (error) {
@@ -122,7 +132,10 @@ const FishManagement: React.FC<Props> = ({ onOpenAddForm, onOpenEditForm }) => {
           </p>
         </div>
         <button
-          onClick={onOpenAddForm}
+          onClick={() => {
+            setEditingFish(null);
+            setShowForm(true);
+          }}
           className="flex items-center gap-2 bg-gradient-to-r from-aqua-mid to-aqua-deep text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-200 hover:scale-105"
         >
           <Plus className="w-5 h-5" />
@@ -184,7 +197,10 @@ const FishManagement: React.FC<Props> = ({ onOpenAddForm, onOpenEditForm }) => {
                     </div>
                     <div className="flex gap-2">
                       <button
-                        onClick={() => onOpenEditForm(f)}
+                        onClick={() => {
+                          setEditingFish(f);
+                          setShowForm(true);
+                        }}
                         className="p-2 hover:bg-blue-50 rounded-lg transition-colors group"
                         title="Edit"
                       >
@@ -231,6 +247,36 @@ const FishManagement: React.FC<Props> = ({ onOpenAddForm, onOpenEditForm }) => {
             </div>
           ))}
         </div>
+      )}
+
+      {showForm && (
+
+        <FishForm
+          initialData={
+            editingFish
+              ? {
+                  english_name: editingFish.english_name,
+                  scientific_name: editingFish.scientific_name,
+                  sinhala_name: editingFish.sinhala_name || "",
+                  habitat: editingFish.habitat || "",
+                  location: editingFish.location,
+                  description: editingFish.description,
+                  image_url: editingFish.image_url,
+                  conservation_status: editingFish.conservation_status || ""
+                }
+              : undefined
+          }
+
+          onSubmit={handleAddOrUpdateFish}
+
+          onCancel={() => {
+            setShowForm(false);
+            setEditingFish(null);
+          }}
+
+          isEditing={!!editingFish}
+        />
+
       )}
 
     </div>

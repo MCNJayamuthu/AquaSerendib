@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { Droplets, Shield } from "lucide-react";
-import { PageView } from "../types";
+import { Link } from "react-router-dom";
 import AdminLoginModal from "./AdminLoginModal";
 
-interface FooterProps {
-  navigateTo: (view: PageView) => void;
-}
-
-const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
+const Footer: React.FC = () => {
 
   const [showAdminLogin, setShowAdminLogin] = useState(false);
 
@@ -23,10 +19,17 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
             <div className="text-center md:text-left">
 
               <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                <Droplets className="w-6 h-6 text-aqua-light" />
-                <span className="text-xl font-serif font-bold tracking-wide">
-                  AquaSerendib
-                </span>
+
+                <Link to="/" className="flex items-center gap-3">
+
+                  <Droplets className="w-6 h-6 text-aqua-light" />
+
+                  <span className="text-xl font-serif font-bold tracking-wide">
+                    AquaSerendib
+                  </span>
+
+                </Link>
+
               </div>
 
               <p className="text-aqua-pale/70 text-sm max-w-xs">
@@ -39,33 +42,33 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
             {/* CENTER LINKS */}
             <div className="flex gap-8 text-sm font-semibold text-aqua-pale">
 
-              <button
-                onClick={() => navigateTo("knowledge")}
+              <Link
+                to="/knowledge"
                 className="hover:text-white transition-colors"
               >
                 Species Database
-              </button>
+              </Link>
 
-              <button
-                onClick={() => navigateTo("roadmap")}
+              <Link
+                to="/roadmap"
                 className="hover:text-white transition-colors"
               >
                 Roadmap
-              </button>
+              </Link>
 
-              <button
-                onClick={() => navigateTo("about")}
+              <Link
+                to="/about"
                 className="hover:text-white transition-colors"
               >
                 Mission
-              </button>
+              </Link>
 
-              <button
-                onClick={() => navigateTo("support")}
+              <Link
+                to="/support"
                 className="hover:text-white transition-colors"
               >
                 Contact
-              </button>
+              </Link>
 
             </div>
 
@@ -76,7 +79,7 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
           <div className="mt-12 pt-8 border-t border-white/10 flex items-center justify-between">
 
             <p className="text-xs text-white/30">
-              &copy; {new Date().getFullYear()} AquaSerendib. All rights reserved.
+              © {new Date().getFullYear()} AquaSerendib. All rights reserved.
               Preserving Sri Lanka's Aquatic Life.
             </p>
 
@@ -99,7 +102,6 @@ const Footer: React.FC<FooterProps> = ({ navigateTo }) => {
       {showAdminLogin && (
         <AdminLoginModal
           close={() => setShowAdminLogin(false)}
-          navigateTo={navigateTo}
         />
       )}
 

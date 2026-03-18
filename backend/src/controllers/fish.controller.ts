@@ -58,9 +58,12 @@ export const addFishSpecies = async (req: Request, res: Response) => {
 
   try {
 
-    const payload = req.body;
+    const payload = {
+  ...req.body,
+  admin_id: (req as any).adminId
+};
 
-    const fish = await createFishSpecies(payload);
+const fish = await createFishSpecies(payload);
 
     res.status(201).json(fish);
 
@@ -88,7 +91,10 @@ export const updateFishSpecies = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Fish ID required" });
     }
 
-    const payload = req.body;
+    const payload = {
+  ...req.body,
+  admin_id: (req as any).adminId
+};
 
     const fish = await editFishSpecies(id, payload);
 
