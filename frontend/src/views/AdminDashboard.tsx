@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect,useState } from "react";
 import AdminSidebar from "../components/AdminSidebar";
-import AdminSupportMessages from "../components/AdminSupportMessages";
-import FishManagement from "../components/FishManagement";
 import FishForm from "../components/FishForm";
-import RoadmapManagement from "../components/RoadmapManagement";
+import { Outlet,useNavigate } from "react-router-dom";
+
 
 interface Fish {
   id: string;
@@ -28,20 +27,24 @@ interface FormData {
   conservation_status: string;
 }
 
-interface Props {
-  navigateTo: (view: string) => void;
-}
 
-const AdminDashboard: React.FC<Props> = ({ navigateTo }) => {
+const AdminDashboard: React.FC = () => {
 
-  const [activeView, setActiveView] = useState("fish");
+  const navigate = useNavigate();
+
   const [showForm, setShowForm] = useState(false);
   const [editingFish, setEditingFish] = useState<Fish | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleLogout = () => {
+
     localStorage.removeItem("adminToken");
-    navigateTo("home");
+
+    // Clear browser history stack
+    window.history.pushState(null, "", "/");
+
+    navigate("/", { replace: true });
+
   };
 
   const openAddForm = () => {
@@ -61,12 +64,15 @@ const AdminDashboard: React.FC<Props> = ({ navigateTo }) => {
 
   const handleSubmit = async (formData: FormData) => {
 
+    const token = localStorage.getItem("adminToken");
+
     if (editingFish) {
 
       await fetch(`http://localhost:5000/api/fish/${editingFish.id}`,{
         method:"PUT",
         headers:{
-          "Content-Type":"application/json"
+          "Content-Type":"application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(formData)
       });
@@ -76,7 +82,8 @@ const AdminDashboard: React.FC<Props> = ({ navigateTo }) => {
       await fetch("http://localhost:5000/api/fish",{
         method:"POST",
         headers:{
-          "Content-Type":"application/json"
+          "Content-Type":"application/json",
+          "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify(formData)
       });
@@ -94,29 +101,11 @@ const AdminDashboard: React.FC<Props> = ({ navigateTo }) => {
 
     <div className="flex h-screen bg-gradient-to-br from-gray-50 to-gray-100">
 
-      <AdminSidebar
-        active={activeView}
-        setActive={setActiveView}
-        onLogout={handleLogout}
-      />
+      <AdminSidebar onLogout={handleLogout}/>
 
       <div className="flex-1 overflow-y-auto">
 
-        {activeView === "fish" && (
-          <FishManagement
-            key={refreshKey}
-            onOpenAddForm={openAddForm}
-            onOpenEditForm={openEditForm}
-          />
-        )}
-
-        {activeView === "support" && (
-          <AdminSupportMessages />
-        )}
-
-        {activeView === "roadmap" && (
-          <RoadmapManagement />
-        )}
+        <Outlet />
 
       </div>
 

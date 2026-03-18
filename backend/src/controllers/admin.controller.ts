@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { loginAdmin } from "../services/admin.service";
+import { supabase } from "../config/supabaseClient";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+
+const JWT_SECRET = process.env.JWT_SECRET || "supersecret";
 
 export const adminLogin = async (req: Request, res: Response) => {
 
@@ -7,24 +11,44 @@ export const adminLogin = async (req: Request, res: Response) => {
 
     const { username, password } = req.body;
 
-    if (!username || !password) {
-      return res.status(400).json({
-        message: "Username and password required"
+    const { data, error } = await supabase
+      .from("admins")
+      .select("*")
+      .eq("username", username)
+      .single();
+
+    if (error || !data) {
+      return res.status(401).json({
+        message: "Invalid username or password"
       });
     }
 
-    const token = await loginAdmin(username, password);
+    const passwordMatch = await bcrypt.compare(password, data.password_hash);
 
-    res.json({
+    if (!passwordMatch) {
+      return res.status(401).json({
+        message: "Invalid username or password"
+      });
+    }
+
+    const token = jwt.sign(
+      { adminId: data.id },
+      JWT_SECRET,
+      { expiresIn: "24h" }
+    );
+
+    res.status(200).json({
       message: "Login successful",
       token
     });
 
   } catch (error: any) {
 
-    res.status(401).json({
-      message: error.message
+    res.status(500).json({
+      message: "Login failed",
+      error: error.message
     });
 
   }
+
 };

@@ -17,6 +17,8 @@ const RoadmapManagement: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
   const [editingItem, setEditingItem] = useState<RoadmapItem | null>(null);
 
+  const token = localStorage.getItem("adminToken");
+
   const fetchRoadmap = async () => {
 
     try {
@@ -49,6 +51,10 @@ const RoadmapManagement: React.FC = () => {
 
     await fetch(`http://localhost:5000/api/roadmap/${id}`, {
       method: "DELETE",
+        headers: {
+        Authorization: `Bearer ${token}`
+      }
+
     });
 
     fetchRoadmap();
@@ -75,7 +81,9 @@ const RoadmapManagement: React.FC = () => {
 
       await fetch(`http://localhost:5000/api/roadmap/${editingItem.id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+         },
         body: JSON.stringify(data),
       });
 
@@ -83,7 +91,9 @@ const RoadmapManagement: React.FC = () => {
 
       await fetch("http://localhost:5000/api/roadmap", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+         },
         body: JSON.stringify(data),
       });
 

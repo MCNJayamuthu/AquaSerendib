@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin: React.FC = () => {
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,8 +31,7 @@ const AdminLogin: React.FC = () => {
 
       alert("Login successful");
 
-      window.location.href = "/admin-dashboard";
-
+      navigate("/admin/dashboard", { replace: true });
     } else {
 
       alert(data.message);

@@ -1,13 +1,3 @@
-// import express from 'express';
-// import { getFishByName, getFishSpecies } from '../controllers/fish.controller';
-
-// const router = express.Router();
-
-// router.get('/', getFishSpecies);
-// router.get('/search', getFishByName);
-
-// export default router;
-
 import express from 'express';
 import {
   getFishByName,
@@ -18,6 +8,7 @@ import {
   uploadFishImageController
 } from '../controllers/fish.controller';
 import { upload } from '../middleware/upload.middleware';
+import { authenticateAdmin } from '../middleware/auth.middleware';
 
 const router = express.Router();
 
@@ -25,11 +16,11 @@ router.get('/', getFishSpecies);
 
 router.get('/search', getFishByName);
 
-router.post('/', addFishSpecies);
+router.post('/', authenticateAdmin, addFishSpecies);
 
-router.put('/:id', updateFishSpecies);
+router.put('/:id', authenticateAdmin, updateFishSpecies);
 
-router.delete('/:id', deleteFishSpecies);
+router.delete('/:id', authenticateAdmin, deleteFishSpecies);
 
 router.post("/upload-image", upload.single("image"), uploadFishImageController);
 
