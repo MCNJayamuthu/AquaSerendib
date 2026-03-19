@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AquaSerendib - AI Powered Fish Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['Cinzel', 'serif'],
+              sans: ['Lato', 'sans-serif'],
+            },
+            colors: {
+              'aqua-deep': '#00334e',
+              'aqua-mid': '#145374',
+              'aqua-light': '#5588a3',
+              'aqua-pale': '#e8f1f5',
+              'sand': '#f1f1e6'
+            },
+            animation: {
+              'swim': 'swim 3s linear infinite',
+              'wave': 'wave 2s ease-in-out infinite',
+            },
+            keyframes: {
+              swim: {
+                '0%': { transform: 'translateX(-100%)' },
+                '100%': { transform: 'translateX(100vw)' },
+              },
+              wave: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-800 antialiased">
+    <div id="root"></div>
+    <script type="module" src="/src/index.tsx"></script>
+  </body>
+</html>
