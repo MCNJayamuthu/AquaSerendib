@@ -102,8 +102,7 @@ source venv/bin/activate
 ```
 
 ```bash
-pip install -r requirements.txt
-python app.py
+uvicorn main:app
 ```
 
 ---
@@ -135,15 +134,14 @@ v1.0.0 – Initial Production Release
 ## Future Improvements
 
 * Add more fish species
-* Improve model accuracy
-* Offline identification mode
 * Community submissions
+* Enhance customer support system
 
 ---
 
 ## Limitations
 
-* Limited number of fish species
+* Limited number of fish species(five species)
 * Performance depends on image quality
 * Requires internet connection
 
@@ -156,6 +154,10 @@ MIT License
 ---
 
 ## Author
+
+Magalage Chandupa Nimnajith Jayamuthu
+
+mcnjayamuthu@gmail.com
 
 Final Year Project – BSc (Hons) Software Engineering
 
